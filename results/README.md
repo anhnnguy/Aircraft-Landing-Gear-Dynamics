@@ -262,6 +262,12 @@ Les simulations réalisées pour plusieurs valeurs de \(c\) permettent de compar
 | 1 500 | 0,037549 | 15,000000 | 0,5303 |
 | 2250 | 0.030084 | 22.500000 | 0.7955 |
 
+![Déplacement](./influence_par_amortissement/influence_amortissement_deplacement.png)
+
+![Déplacement](./influence_par_amortissement/influence_amortissement_vitesse.png)
+
+![Déplacement](./influence_par_amortissement/influence_amortissement_acceleration.png)
+
 Les deux premières lignes reprennent les résultats disponibles. Les autres cas seront ajoutés à partir de la sortie complète du programme.
 
 ### 2.3. Analyse des résultats
@@ -326,7 +332,11 @@ Les courbes de déplacement, de vitesse et d'accélération sont utilisées pour
 | 20000 | 0.037549 | 15.000000 | 0.530|
 | 30000 | 0.033663 | 15.52839 | 0.4330|
 
-![Influence de la raideur sur le déplacement](results/influence_par_raideur/influence_raideur_deplacement.png)
+![Déplacement](./influence_par_raideur/influence_raideur_deplacement.png)
+
+![Déplacement](./influence_par_raideur/influence_raideur_vitesse.png)
+
+![Déplacement](./influence_par_raideur/influence_raideur_acceleration.png)
 
 Les valeurs exactes doivent être extraites des simulations Python avant de tirer une conclusion quantitative.
 
