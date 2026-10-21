@@ -326,6 +326,8 @@ Les courbes de déplacement, de vitesse et d'accélération sont utilisées pour
 | 20000 | 0.037549 | 15.000000 | 0.530|
 | 30000 | 0.033663 | 15.52839 | 0.4330|
 
+![Influence de la raideur sur le déplacement](results/influence_par_raideur/influence_raideur_deplacement.png)
+
 Les valeurs exactes doivent être extraites des simulations Python avant de tirer une conclusion quantitative.
 
 ### 3.3. Analyse des résultats
