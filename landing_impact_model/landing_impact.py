@@ -72,6 +72,53 @@ max_abs_acceleration = float(np.max(np.abs(az)))
 i_max = int(np.argmax(compression))
 t_max_compression = float(t[i_max])
 
+# Verification: solution numerical vs solution analytique
+# Valider quand le train d'atterrisage contacte avec le sol et Fc = k_c*z + c_c*vz.
+
+omega_n = np.sqrt(k_c / m)
+zeta = c_c / (2 * np.sqrt(m * k_c))
+omega_d = omega_n * np.sqrt(1 - zeta**2)
+alpha = zeta * omega_n
+
+z_eq = g / omega_n**2
+A = z0 - z_eq
+B = (v0 + alpha * A) / omega_d
+
+exp_term = np.exp(-alpha * t)
+cos_term = np.cos(omega_d * t)
+sin_term = np.sin(omega_d * t)
+
+z_analytical = z_eq + exp_term * (
+    A * cos_term + B * sin_term
+)
+
+vz_analytical = exp_term * (
+    (-alpha * A + omega_d * B) * cos_term
+    + (-alpha * B - omega_d * A) * sin_term
+)
+
+az_analytical = g - (
+    k_c * z_analytical + c_c * vz_analytical
+) / m
+
+# Skip the first millisecond to avoid the contact-switching point at t = 0.
+mask = t >= 0.001
+
+error_z = np.max(np.abs(z[mask] - z_analytical[mask]))
+error_v = np.max(np.abs(vz[mask] - vz_analytical[mask]))
+error_a = np.max(np.abs(az[mask] - az_analytical[mask]))
+
+print("\n=== NUMERICAL VALIDATION ===")
+print(f"Natural frequency          : {omega_n:.4f} rad/s")
+print(f"Damping ratio              : {zeta:.4f}")
+print(f"Damped frequency           : {omega_d:.4f} rad/s")
+print(f"Static equilibrium         : {z_eq * 1000:.3f} mm")
+print(f"Analytical max compression : {np.max(z_analytical) * 1000:.3f} mm")
+print(f"Max displacement error     : {error_z:.6e} m")
+print(f"Max velocity error         : {error_v:.6e} m/s")
+print(f"Max acceleration error     : {error_a:.6e} m/s²")
+
+
 plots = [
     (z * 1000, "déplacement vertical z", "déplacement [mm]", "landing_impact_deplacement.png"),
     (vz, "vitesse verticale", "vitesse [m/s]", "landing_impact_vitesse.png"),
