@@ -4,7 +4,7 @@ L’objectif est de développer un modèle dynamique simplifié afin d’étudie
 
 Le modèle représente le système par une masse équivalente, un ressort et un amortisseur visqueux. Il permet de simuler la compression, la vitesse, l’accélération et la force de contact au cours de l’impact.
 
-Ce modèle constitue une première approche numérique. Elle est décrite par les résultats de recherche de l'article scientifique intitulé « Modèles linéaires et non linéaires pour la simulation de la chute d'un système de train d'atterrissage d'avion avec amortisseurs MR ».
+Ce modèle constitue une première approche numérique simplifiée, développée dans le cadre de ce projet. Les paramètres de raideur, d’amortissement et de vitesse initiale sont repris de l’étude de Kang et al. (2023), intitulée Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. La formulation des équations du mouvement et la loi de contact sont établies pour le présent modèle à un degré de liberté et ne constituent pas une reproduction intégrale du modèle de l’article.amortisseurs MR ».
 ## 2. Paramètres du modèle
 | Paramètre | Symbole | Valeur | Unité |
 |---|---|---:|---|
@@ -14,9 +14,9 @@ Ce modèle constitue une première approche numérique. Elle est décrite par le
 | Vitesse verticale initiale | $v_0$ | 3,05 | m/s |
 | Accélération de la pesanteur | $g$ | 9,81 | m/s² |
 
-Les valeurs de raideur, d’amortissement et de vitesse initiale sont reprises de l’étude de référence sélectionnée.
+Les valeurs de la raideur $k_c = 46,680 \mathrm{N/m}$, du coefficient d’amortissement $c_c = 7,337\ \mathrm{N.s/m}$ et de la vitesse verticale initiale $v_0 = 3{,}05\ \mathrm{m/s}$ sont reprises de l’étude de Kang et al. (2023). Les valeurs de raideur et d’amortissement correspondent aux paramètres linéarisés des trains principaux présentés dans le Tableau 3 de l’article.
 
-La masse équivalente de 816,5 kg est une hypothèse de simplification, obtenue en divisant par deux la masse de référence de 1 633 kg. Cette valeur n’est pas présentée comme une masse directement validée pour un modèle à un degré de liberté.
+La masse équivalente $m = 816{,}5\ \mathrm{kg}$ constitue une hypothèse propre au présent modèle simplifié, obtenue en divisant par deux la masse de référence $m_0 = 1,633\ \mathrm{kg}$ indiquée dans le Tableau 3. Cette hypothèse n’est pas une valeur directement validée par les auteurs pour un modèle à un degré de liberté.
 
 ## 3. Hypothèses de modélisation
 
@@ -135,3 +135,9 @@ Ce modèle est une première approximation du phénomène d’impact à l’atte
 - la validation expérimentale des résultats.
 
 Le modèle pourra être amélioré ultérieurement en intégrant des lois de contact plus réalistes et en comparant les résultats à des données de référence.
+
+## 10. Référence bibliographique
+
+Kang, B.-H., Jo, B.-H., Kim, B.-G., Hwang, J.-H. et Choi, S.-B. (2023). Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. Actuators, 12(7), 287.
+
+https://doi.org/10.3390/act12070287
