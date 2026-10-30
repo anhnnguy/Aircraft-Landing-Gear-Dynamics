@@ -14,11 +14,11 @@ Le système est représenté par une masse équivalente reliée à un ressort et
 
 Le système étudié comporte trois éléments principaux :
 
-- Une masse équivalente \(m\), représentant la masse supportée par le système.
-- Un ressort de raideur \(k\), qui produit une force de rappel.
-- Un amortisseur visqueux de coefficient \(c\), qui s'oppose au mouvement et dissipe de l'énergie.
+- Une masse équivalente $m$, représentant la masse supportée par le système.
+- Un ressort de raideur $k$, qui produit une force de rappel.
+- Un amortisseur visqueux de coefficient $c$, qui s'oppose au mouvement et dissipe de l'énergie.
 
-Le déplacement \(x(t)\) est mesuré par rapport à la position d'équilibre statique. Le poids et les autres forces constantes sont ainsi pris en compte dans cette position d'équilibre.
+Le déplacement $x(t)$ est mesuré par rapport à la position d'équilibre statique. Le poids et les autres forces constantes sont ainsi pris en compte dans cette position d'équilibre.
 
 En appliquant la deuxième loi de Newton, l'équation générale du mouvement s'écrit :
 
@@ -28,11 +28,11 @@ $$
 
 Où :
 
-- \(m\) est la masse équivalente, en kg ;
-- \(c\) est le coefficient d'amortissement, en N·s/m ;
-- \(k\) est la raideur du ressort, en N/m ;
-- \(x(t)\), \(\dot{x}(t)\) et \(\ddot{x}(t)\) représentent respectivement le déplacement, la vitesse et l'accélération ;
-- \(F(t)\) représente une force extérieure variable par rapport à l'équilibre.
+- $m$ est la masse équivalente, en kg ;
+- $c$ est le coefficient d'amortissement, en N·s/m ;
+- $k$ est la raideur du ressort, en N/m ;
+- $x(t)$, $\dot{x}(t)$ et $\ddot{x}(t)$ représentent respectivement le déplacement, la vitesse et l'accélération ;
+- $F(t)$ représente une force extérieure variable par rapport à l'équilibre.
 
 Pour cette première étude, le système est considéré en oscillation libre, sans force extérieure supplémentaire après l'application des conditions initiales. L'équation devient :
 
@@ -40,7 +40,7 @@ $$
 m\ddot{x}+c\dot{x}+kx=0
 $$
 
-## 3. Recherche de la fonction analytique \(x(t)\)
+## 3. Recherche de la fonction analytique $x(t)$
 
 ### 3.1. Équation caractéristique
 
@@ -66,13 +66,13 @@ $$
 
 Trois régimes sont possibles :
 
-- \(\Delta<0\) : régime sous-amorti, avec des oscillations amorties ;
-- \(\Delta=0\) : régime d'amortissement critique ;
-- \(\Delta>0\) : régime sur-amorti, sans oscillations.
+- $\Delta<0$ : régime sous-amorti, avec des oscillations amorties ;
+- $\Delta=0$ : régime d'amortissement critique ;
+- $\Delta>0$ : régime sur-amorti, sans oscillations.
 
 ### 3.2. Détermination de la solution
 
-Lorsque \(\Delta<0\), les racines sont complexes :
+Lorsque $\Delta<0$, les racines sont complexes :
 
 $$
 r_{1,2}=-\alpha\pm i\omega_d
@@ -97,7 +97,7 @@ x(t)=e^{-\alpha t}
 \left[A\cos(\omega_dt)+B\sin(\omega_dt)\right]
 $$
 
-Les constantes \(A\) et \(B\) sont déterminées à partir des conditions initiales.
+Les constantes $A$ et $B$ sont déterminées à partir des conditions initiales.
 
 Pour le scénario étudié, les conditions initiales sont :
 
@@ -126,11 +126,11 @@ Les paramètres de référence retenus pour cette illustration sont :
 
 | Paramètre | Valeur |
 |---|---:|
-| Masse équivalente \(m\) | 100 kg |
-| Raideur \(k\) | 20 000 N/m |
-| Coefficient d'amortissement \(c\) | 1 500 N·s/m |
-| Déplacement initial \(x(0)\) | 0 m |
-| Vitesse initiale \(\dot{x}(0)\) | 1 m/s |
+| Masse équivalente $m$ | 100 kg |
+| Raideur $k$ | 20 000 N/m |
+| Coefficient d'amortissement $c$ | 1 500 N·s/m |
+| Déplacement initial $x(0)$ | 0 m |
+| Vitesse initiale $\dot{x}(0)$ | 1 m/s |
 | Durée de simulation | 2 s |
 
 La pulsation propre non amortie est :
@@ -155,19 +155,19 @@ $$
 
 En remplaçant les paramètres par leurs valeurs :
 
-c_crit = 2 * sqrt(m * k)
+$c_{\mathrm{crit}} = 2\sqrt{m \times k}$
 
-Avec m = 100 kg et k = 20000 N/m :
+Avec $m = 100 kg$ et $k = 20000 N/m$ :
 
-c_crit = 2 * sqrt(100 * 20000) = 2828,43 N.s/m
+$c_{\mathrm{crit}} = 2\sqrt{100 * 20000} = 2828,43 N.s/m$
 
 Pour c = 1500 N.s/m :
 
-alpha = c / (2 * m) = 1500 / (2 * 100) = 7,5 s^-1
+$\alpha = \frac{c}{2 * m} = \frac{1500}{2 * 100} = 7,5 s^-1$
 
-omega_d = sqrt(k / m - alpha^2)
+$\omega_d = \sqrt{\frac{k}{m} - \alpha^2}$
 
-omega_d = sqrt(200 - 7,5^2) ≈ 11,99 rad/s
+$\omega_d = \sqrt{200 - 7,5^2} ≈ 11,99 rad/s$
 
 Le système est sous-amorti puisque c < c_crit.
 
@@ -205,9 +205,9 @@ Cette formulation est implémentée en Python. La fonction `solve_ivp` de SciPy 
 
 Les principales grandeurs calculées sont :
 
-- Le déplacement \(x(t)\).
-- La vitesse \(\dot{x}(t)\).
-- L'accélération \(\ddot{x}(t)\).
+- Le déplacement $x(t)$.
+- La vitesse $\dot{x}(t)$.
+- L'accélération $\ddot{x}(t)$.
 
 La simulation numérique permet de comparer plusieurs configurations mécaniques sans devoir résoudre manuellement l'équation différentielle pour chaque nouvelle valeur des paramètres.
 
@@ -223,7 +223,7 @@ La solution analytique fournit une référence théorique pour vérifier la coh�
 
 ## 1. Méthodologie de comparaison
 
-L'objectif de cette deuxième étape est d'étudier l'influence des paramètres \(c\) et \(k\) sur la réponse dynamique du système.
+L'objectif de cette deuxième étape est d'étudier l'influence des paramètres $c$ et $k$ sur la réponse dynamique du système.
 
 Pour comparer les résultats correctement, un seul paramètre est modifié à la fois, tandis que les autres paramètres et les conditions initiales restent constants.
 
@@ -231,7 +231,7 @@ Les indicateurs retenus comprennent le déplacement maximal, la vitesse maximale
 
 Ces indicateurs permettent de distinguer la réduction des déplacements de l'évolution des accélérations, qui ne réagissent pas nécessairement de la même manière.
 
-## 2. Influence du coefficient d'amortissement \(c\)
+## 2. Influence du coefficient d'amortissement $c$
 
 ### 2.1. Principe physique
 
@@ -241,7 +241,7 @@ $$
 F_c=-c\dot{x}
 $$
 
-Lorsque \(c\) augmente, la force d'amortissement devient plus importante pour une même vitesse. Le système dissipe alors davantage d'énergie mécanique au cours du mouvement.
+Lorsque $c$ augmente, la force d'amortissement devient plus importante pour une même vitesse. Le système dissipe alors davantage d'énergie mécanique au cours du mouvement.
 
 Le taux d'amortissement est défini par :
 
@@ -250,13 +250,13 @@ $$
 =\frac{c}{c_{\mathrm{crit}}}
 $$
 
-Pour une masse et une raideur constantes, l'augmentation de \(c\) augmente donc le taux d'amortissement.
+Pour une masse et une raideur constantes, l'augmentation de $c$ augmente donc le taux d'amortissement.
 
 ### 2.2. Comparaison des résultats numériques
 
-Les simulations réalisées pour plusieurs valeurs de \(c\) permettent de comparer les indicateurs suivants :
+Les simulations réalisées pour plusieurs valeurs de $c$ permettent de comparer les indicateurs suivants :
 
-| \(c\) (N·s/m) | x_max (m) | Accélération maximale absolue (m/s²) | zeta |
+| $c (N·s/m)$ | $x_{\mathrm{max}} (m)$ | Accélération maximale absolue $(m/s²)$ | $\zeta$ |
 |---:|---:|---:|---:|
 | 750 | 0,049422 | 11,456879 | 0,2652 |
 | 1 500 | 0,037549 | 15,000000 | 0,5303 |
@@ -272,7 +272,7 @@ Les deux premières lignes reprennent les résultats disponibles. Les autres cas
 
 ### 2.3. Analyse des résultats
 
-Entre \(c=750\) et \(c=1500\ \text{N·s/m}\), le déplacement maximal passe de 0,049422 m à 0,037549 m.
+Entre $c=750$ et $c=1500 \text{ N.s/m} $, le déplacement maximal passe de $0,049422 m$ à $0,037549 m$.
 
 Cela correspond à une diminution d'environ 24 % du déplacement maximal. Ce résultat indique que, dans les configurations simulées, l'augmentation de l'amortissement limite le déplacement de la masse.
 
@@ -284,17 +284,17 @@ $$
 \ddot{x}=-\frac{c}{m}\dot{x}-\frac{k}{m}x
 $$
 
-À l'instant initial, puisque \(x(0)=0\) et \(\dot{x}(0)=1\ \text{m/s}\), l'accélération vaut :
+À l'instant initial, puisque $x(0)=0$ et $\dot{x}(0)=1\ \text{m/s}$, l'accélération vaut :
 
 $$
 \ddot{x}(0)=-\frac{c}{m}
 $$
 
-Elle vaut ainsi -7,5 m/s² pour \(c=750\) et -15 m/s² pour \(c=1500\ \text{N·s/m}\). Cette dernière valeur correspond à l'accélération initiale et à la valeur absolue maximale rapportée par la simulation.
+Elle vaut ainsi $-7,5 m/s²$ pour $c=750$ et $-15 m/s^2$ pour $c=1500\ \text{ N.s/m}$. Cette dernière valeur correspond à l'accélération initiale et à la valeur absolue maximale rapportée par la simulation.
 
 L'étude montre donc qu'un amortissement plus important peut réduire le déplacement tout en augmentant l'accélération maximale. Le choix du coefficient d'amortissement doit prendre en compte plusieurs critères.
 
-## 3. Influence de la raideur du ressort \(k\)
+## 3. Influence de la raideur du ressort $k$
 
 ### 3.1. Principe physique
 
@@ -320,13 +320,13 @@ $$
 \omega_d=\sqrt{\frac{k}{m}-\left(\frac{c}{2m}\right)^2}
 $$
 
-Lorsque \(m\) et \(c\) sont constants, une augmentation de \(k\) augmente également \(\omega_d\), tant que le système reste sous-amorti.
+Lorsque $m$ et $c$ sont constants, une augmentation de \(k\) augmente également \(\omega_d\), tant que le système reste sous-amorti.
 
 ### 3.2. Comparaison des courbes
 
 Les courbes de déplacement, de vitesse et d'accélération sont utilisées pour comparer les différentes valeurs de raideur.
 
-| k (N/m) | x_max (m) | Accélération maximale absolue (m/s²) | Zeta |
+| $k (N/m)$ | $x_{\mathrm{max}} (m)$ | Accélération maximale absolue $(m/s²)$ | $\zeta$ |
 |---:|---:|---:|---:|
 | 10000 | 0.044065 | 15.000000 | 0.7500 |
 | 20000 | 0.037549 | 15.000000 | 0.530|
@@ -348,14 +348,14 @@ Une raideur plus élevée augmente la fréquence propre du système. Cependant, 
 
 Il est donc nécessaire de distinguer les observations graphiques des conclusions quantitatives. Les valeurs maximales doivent être extraites du même intervalle de simulation et calculées selon la même méthode pour chaque configuration.
 
-## 4. Comparaison générale entre \(c\) et \(k\)
+## 4. Comparaison générale entre $c$ et $k$
 
 Les deux études paramétriques mettent en évidence des rôles physiques différents.
 
 | Paramètre | Effet physique principal | Indicateurs à examiner |
 |---|---|---|
-| Coefficient d'amortissement \(c\) | Dissipation d'énergie et atténuation des oscillations | Déplacement maximal, accélération maximale, décroissance des oscillations |
-| Raideur \(k\) | Force de rappel et fréquence propre | Déplacement, vitesse, accélération, fréquence des oscillations |
+| Coefficient d'amortissement $c$ | Dissipation d'énergie et atténuation des oscillations | Déplacement maximal, accélération maximale, décroissance des oscillations |
+| Raideur $k$ | Force de rappel et fréquence propre | Déplacement, vitesse, accélération, fréquence des oscillations |
 
 Le coefficient d'amortissement agit directement sur la dissipation d'énergie. La raideur détermine principalement la rigidité du système et contribue à fixer sa fréquence propre.
 
@@ -367,11 +367,11 @@ Le modèle masse–ressort–amortisseur à un degré de liberté permet d'étud
 
 La première étape a permis d'établir l'équation différentielle, de déterminer la solution analytique et de développer une résolution numérique avec Python.
 
-La deuxième étape a permis d'étudier séparément l'influence du coefficient d'amortissement \(c\) et de la raideur \(k\).
+La deuxième étape a permis d'étudier séparément l'influence du coefficient d'amortissement $c$ et de la raideur $k$.
 
-Pour les deux valeurs de \(c\) présentées, l'augmentation de l'amortissement réduit le déplacement maximal, mais augmente l'accélération maximale rapportée. Ce résultat illustre l'importance d'une analyse multicritère.
+Pour les deux valeurs de $c$ présentées, l'augmentation de l'amortissement réduit le déplacement maximal, mais augmente l'accélération maximale rapportée. Ce résultat illustre l'importance d'une analyse multicritère.
 
-L'étude de \(k\) doit être complétée par les valeurs numériques extraites des simulations afin de quantifier son influence sur le déplacement, la vitesse et l'accélération.
+L'étude de $k$ doit être complétée par les valeurs numériques extraites des simulations afin de quantifier son influence sur le déplacement, la vitesse et l'accélération.
 
 Enfin, le modèle actuel reste une approximation linéaire à un degré de liberté. Il ne représente pas encore tous les phénomènes d'un train d'atterrissage réel, notamment les non-linéarités de l'amortisseur, les variations de charge, les contacts pneu-piste et les mouvements couplés du train.
 
