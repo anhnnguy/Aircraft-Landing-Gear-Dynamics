@@ -136,7 +136,48 @@ Ce modèle est une première approximation du phénomène d’impact à l’atte
 
 Le modèle pourra être amélioré ultérieurement en intégrant des lois de contact plus réalistes et en comparant les résultats à des données de référence.
 
-## 10. Référence bibliographique
+## 10. Vérification et validation numérique
+
+La cohérence numérique du modèle a été vérifiée à l'aide de deux méthodes complémentaires.
+
+### 10.1 Comparaison avec la solution analytique
+
+La solution numérique obtenue avec `solve_ivp` a été comparée à la solution analytique de l'équation différentielle linéaire.
+
+Les erreurs maximales obtenues sont :
+
+| Grandeur | Erreur maximale |
+|---|---:|
+| Déplacement | 2,03 × 10⁻⁷ m |
+| Vitesse | 3,04 × 10⁻⁶ m/s |
+| Accélération | 2,75 × 10⁻⁵ m/s² |
+
+Ces erreurs très faibles confirment la précision numérique de la résolution.
+
+### 10.2 Vérification du bilan énergétique
+
+Le bilan énergétique a également été vérifié à partir de l'équation :
+
+$$\Delta E_c + \Delta E_e = E_p - E_d$$
+
+avec :
+
+- $E_c$ : énergie cinétique ;
+- $E_e$ : énergie élastique stockée dans le ressort ;
+- $E_p$ : énergie potentielle ;
+- $E_d$ : énergie dissipée par l'amortisseur.
+
+Le résidu énergétique maximal obtenu est de **0,02434 J**, pour une énergie cinétique initiale de **3797,75 J**.
+
+Ce résultat confirme la cohérence énergétique de la simulation, dans les limites des erreurs d'intégration numérique.
+
+### 10.3 Conclusion
+
+Les deux vérifications montrent que l'implémentation numérique est cohérente avec les équations mathématiques du modèle à un degré de liberté.
+
+Cette validation concerne uniquement la cohérence mathématique et numérique du modèle. Elle ne constitue pas une validation expérimentale du comportement réel de l’étude de Kang et al. (2023).
+
+## 11. Référence bibliographique
 
 Kang, B.-H., Jo, B.-H., Kim, B.-G., Hwang, J.-H. et Choi, S.-B. (2023). Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. Actuators, 12(7), 287.
 
