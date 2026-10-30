@@ -154,3 +154,50 @@ print(f"Time at maximum compression : {t_max_compression:.4f} s")
 print(f"Maximum contact force       : {max_contact_force / 1000:.3f} kN")
 print(f"Maximum |acceleration|      : {max_abs_acceleration:.3f} m/s^2")
 print(f"Outputs saved in            : {OUTPUT_DIR}")
+
+
+# ============================================================
+# ENERGY BALANCE VERIFICATION
+# ============================================================
+# l'energie mécanique
+E_cinetique = 0.5 * m * vz**2 # l'energie cinetique
+E_potentielle = m * g * (z - z0) # l'energie potentielle
+E_elastique = 0.5 * k_c * z**2 #l'energie elastique
+
+#energie dissipée par l'amortisseur
+ap = c_c * vz**2 # puissance dissipée par l'amortisseur
+E_dissipated = np.zeros_like(t)
+
+E_dissipated[1:] = np.cumsum(
+    0.5 * (ap[1:] + ap[:-1])
+    * np.diff(t)
+)
+
+# balance d'energie
+# delta(E_cinetique) + delta(E_elastique) = E_potentielle - E_dissipated
+
+delta_mecanique = E_cinetique - E_cinetique[0] + E_elastique - E_elastique[0]
+delta_energie = E_potentielle - E_dissipated
+
+energy_residual = delta_mecanique - delta_energie
+max_energy_error = np.max(np.abs(energy_residual))
+
+print("\n=== ENERGY BALANCE VERIFICATION ===")
+print(f"energy cinétique initiale  : {E_cinetique[0]:.4f} J")
+print(f"energy cinétique finale    : {E_cinetique[-1]:.4f} J")
+print(f"energy elastique finale    : {E_elastique[-1]:.4f} J")
+print(f"energie potentielle finale : {E_potentielle[-1]:.4f} J")
+print(f"energie dissipée finale    : {E_dissipated[-1]:.4f} J")
+print(f"maximum residual d'énergie : {max_energy_error:.6e} J")
+
+# Find the instant of maximum energy residual
+i_error = int(np.argmax(np.abs(energy_residual)))
+
+print("\n=== ENERGY ERROR DIAGNOSTIC ===")
+print(f"le temps de maximum residual : {t[i_error]:.6f} s")
+print(f"residual à ce moment     : {energy_residual[i_error]:.6f} J")
+print(f"energy cinétique           : {E_cinetique[i_error]:.6f} J")
+print(f"energy élastique            : {E_elastique[i_error]:.6f} J")
+print(f"travail de la pesanteur              : {E_potentielle[i_error]:.6f} J")
+print(f"energy dissipée        : {E_dissipated[i_error]:.6f} J")
+print(f"residual à l'instant final   : {energy_residual[-1]:.6f} J")
