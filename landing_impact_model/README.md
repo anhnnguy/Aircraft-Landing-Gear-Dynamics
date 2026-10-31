@@ -14,9 +14,9 @@ Ce modèle constitue une première approche numérique simplifiée, développée
 | Vitesse verticale initiale | $v_0$ | 3,05 | m/s |
 | Accélération de la pesanteur | $g$ | 9,81 | m/s² |
 
-Les valeurs de la raideur $k_c = 46,680 \mathrm{N/m}$, du coefficient d’amortissement $c_c = 7,337\ \mathrm{N.s/m}$ et de la vitesse verticale initiale $v_0 = 3{,}05\ \mathrm{m/s}$ sont reprises de l’étude de Kang et al. (2023). Les valeurs de raideur et d’amortissement correspondent aux paramètres linéarisés des trains principaux présentés dans le Tableau 3 de l’article.
+Les valeurs de la raideur $k_c = 46 680 \mathrm{N/m}$, du coefficient d’amortissement $c_c = 7 337\ \mathrm{N.s/m}$ et de la vitesse verticale initiale $v_0 = 3{,}05\ \mathrm{m/s}$ sont reprises de l’étude de Kang et al. (2023). Les valeurs de raideur et d’amortissement correspondent aux paramètres linéarisés des trains principaux présentés dans le Tableau 3 de l’article.
 
-La masse équivalente $m = 816{,}5\ \mathrm{kg}$ constitue une hypothèse propre au présent modèle simplifié, obtenue en divisant par deux la masse de référence $m_0 = 1,633\ \mathrm{kg}$ indiquée dans le Tableau 3. Cette hypothèse n’est pas une valeur directement validée par les auteurs pour un modèle à un degré de liberté.
+La masse équivalente $m = 816{,}5\ \mathrm{kg}$ constitue une hypothèse propre au présent modèle simplifié, obtenue en divisant par deux la masse de référence $m_0 = 1 633\ \mathrm{kg}$ indiquée dans le Tableau 3. Cette hypothèse n’est pas une valeur directement validée par les auteurs pour un modèle à un degré de liberté.
 
 ## 3. Hypothèses de modélisation
 
@@ -99,9 +99,15 @@ Les résultats doivent être analysés afin de vérifier la cohérence physique 
 
 ```text
 Landing_Impact_Model/
+├── etude_influence_vitesse.py
 ├── landing_impact.py
 ├── README.md
 └── results/
+    ├── influence_vitesse/
+        ├── influence_vitesse_acceleration.png
+        ├── influence_vitesse_compression.png
+        ├── influence_vitesse_force.png
+        ├── resultats_influence_vitesse.cvs
     ├── landing_impact_deplacement.png
     ├── landing_impact_vitesse.png
     ├── landing_impact_acceleration.png
@@ -177,7 +183,70 @@ Les deux vérifications montrent que l'implémentation numérique est cohérente
 
 Cette validation concerne uniquement la cohérence mathématique et numérique du modèle. Elle ne constitue pas une validation expérimentale du comportement réel de l’étude de Kang et al. (2023).
 
-## 11. Référence bibliographique
+## 11. Étude de l'influence de la vitesse initiale
+
+### 11.1 Objectif
+
+Cette étude paramétrique vise à analyser l'influence de la vitesse verticale initiale (v_0) sur le comportement dynamique du système lors de l'impact à l'atterrissage.
+
+L'objectif est d'observer l'évolution de la compression maximale, de la force de contact maximale, de l'accélération maximale en valeur absolue et du temps nécessaire pour atteindre la compression maximale.
+
+### 11.2 Paramètres de l'étude
+
+La vitesse initiale est le seul paramètre modifié. Les autres paramètres du modèle restent constants.
+
+Les valeurs étudiées sont :
+
+$
+v_0 \in \left\{2{,}0;\ 2{,}5;\ 3{,}05;\ 3{,}5;\ 4{,}0\right\} \mathrm{m/s}
+$
+
+La valeur de référence est $v_0 = 3{,}05\ \mathrm{m/s}$.
+
+### 11.3. Résultats numériques
+
+| $v_0$ (m/s) | Compression maximale (mm) | Force maximale (kN) | Accélération maximale (m/s²) | Temps de compression maximale (s) |
+|---:|---:|---:|---:|---:|
+| 2,00 | 235,147 | 15,606 | 9,810 | 0,2695 |
+| 2,50 | 261,251 | 18,726 | 13,125 | 0,2430 |
+| 3,05 | 292,619 | 22,475 | 17,716 | 0,2245 |
+| 3,50 | 319,513 | 25,690 | 21,653 | 0,2135 |
+| 4,00 | 350,210 | 29,345 | 26,130 | 0,2050 |
+
+Aucun événement de perte de contact n'a été détecté pendant la durée de simulation de 2 secondes pour les cinq vitesses étudiées.
+
+### 11.4. Analyse des résultats
+
+Les résultats montrent que l'augmentation de la vitesse verticale initiale entraîne une augmentation de la compression maximale, de la force de contact maximale et de l'accélération maximale en valeur absolue.
+
+Entre 2,0 et 4,0 m/s :
+
+- La compression maximale augmente d'environ 49 %.
+- La force de contact maximale augmente d'environ 88 %.
+- L'accélération maximale en valeur absolue est multipliée par environ 2,66.
+
+Par ailleurs, le temps nécessaire pour atteindre la compression maximale diminue lorsque la vitesse initiale augmente.
+
+Ces résultats montrent que la vitesse verticale initiale joue un rôle important dans la sévérité de l'impact.
+
+### 11.5. Graphiques et données
+
+Les graphiques et les résultats numériques de cette étude sont enregistrés dans le dossier `results/influence_vitesse/` :
+
+- `influence_vitesse_compression.png` : influence de la vitesse initiale sur la compression maximale ;
+- `influence_vitesse_force.png` : évolution de la force de contact ;
+- `influence_vitesse_acceleration.png` : évolution de l'accélération ;
+- `resultats_influence_vitesse.csv` : tableau des résultats numériques.
+
+Le programme utilisé est `etude_influence_vitesse.py`.
+
+### 11.6. Conclusion
+
+L'étude paramétrique met en évidence une relation croissante entre la vitesse verticale initiale et la sévérité de l'impact dans le cadre du modèle simplifié.
+
+Une vitesse initiale plus élevée conduit à une compression plus importante du système et à des efforts de contact plus élevés. Cette étude souligne donc l'importance de la vitesse verticale au moment du premier contact avec le sol.
+
+## 12. Référence bibliographique
 
 Kang, B.-H., Jo, B.-H., Kim, B.-G., Hwang, J.-H. et Choi, S.-B. (2023). Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. Actuators, 12(7), 287.
 
