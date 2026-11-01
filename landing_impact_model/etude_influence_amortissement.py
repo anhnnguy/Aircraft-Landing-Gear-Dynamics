@@ -46,7 +46,6 @@ BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / "results" / "influence_amortissement"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-
 # ============================================================
 # 3. MODELE PHYSIQUE
 # ============================================================
@@ -81,7 +80,7 @@ def equation_state(t, state, c_c):
 # 4. DETECTION DU DECOLLAGE
 # ============================================================
 
-def make_leave_contact(c_c):
+def make_leave_contact(k_c, c_c):
 
     def leave_contact_event(t, state, c_c_event):
 
@@ -98,7 +97,7 @@ def make_leave_contact(c_c):
     return leave_contact_event
 
 # ============================================================
-# 5. SIMULATIONS POUR LES DIFFERENTES RAIDEURS
+# 5. SIMULATIONS POUR LES DIFFERENTES VALEURS D'AMORTISSEMENT
 # ============================================================
 
 results = []
@@ -106,7 +105,7 @@ simulation_data = []
 
 for c_c in c_c_values:
 
-    event = make_leave_contact(float(c_c))
+    event = make_leave_contact(k_c, float(c_c))
 
     solution = solve_ivp(
         equation_state,
@@ -178,7 +177,7 @@ print("ETUDE DE L'INFLUENCE DE L'AMORTISSEMENT DU SYSTEME")
 print("=" * 85)
 
 print(
-    f"{'k_c (N/m)':>12} | "
+    f"{'c_c (N.s/m)':>12} | "
     f"{'Compression (mm)':>18} | "
     f"{'Force max (kN)':>16} | "
     f"{'Acc. max (m/s2)':>17} | "
