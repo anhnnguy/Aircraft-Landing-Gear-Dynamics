@@ -100,6 +100,8 @@ Les résultats doivent être analysés afin de vérifier la cohérence physique 
 ```text
 Landing_Impact_Model/
 ├── etude_influence_vitesse.py
+├── etude_influence_raideur.py
+├── etude_influence_amortissement.py
 ├── landing_impact.py
 ├── README.md
 └── results/
@@ -108,6 +110,16 @@ Landing_Impact_Model/
         ├── influence_vitesse_compression.png
         ├── influence_vitesse_force.png
         ├── resultats_influence_vitesse.cvs
+    ├── influence_raideur/
+        ├── influence_raideur_compression.png
+        ├── influence_raideur_force.png
+        ├── influence_raideur_acceleration.png
+        ├── resultats_influence_raideur.cvs
+    ├── influence_amortissement/
+        ├── influence_amortissement_compression.png
+        ├── influence_amortissement_force.png
+        ├── influence_amortissement_acceleration.png
+        ├── resultats_influence_amortissement.cvs
     ├── landing_impact_deplacement.png
     ├── landing_impact_vitesse.png
     ├── landing_impact_acceleration.png
@@ -246,7 +258,123 @@ L'étude paramétrique met en évidence une relation croissante entre la vitesse
 
 Une vitesse initiale plus élevée conduit à une compression plus importante du système et à des efforts de contact plus élevés. Cette étude souligne donc l'importance de la vitesse verticale au moment du premier contact avec le sol.
 
-## 12. Référence bibliographique
+## 12. Étude de l'influence de la raideur du système
+
+### 12.1. Objectif
+
+Cette étude vise à analyser l'influence de la raideur du ressort $k_c$ sur le comportement dynamique du train d'atterrissage pendant l'impact.
+
+L'objectif est d'évaluer l'effet de la raideur sur :
+- la compression maximale du système ;
+- la force de contact maximale ;
+- l'accélération maximale absolue ;
+- le temps nécessaire pour atteindre la compression maximale.
+
+### 12.2. Paramètres de simulation
+
+Pour cette étude, la raideur du ressort est modifiée tandis que les autres paramètres sont maintenus constants.
+
+| Paramètre | Valeur |
+|---|---:|
+| Masse équivalente $m$ | $816,5 kg$ |
+| Coefficient d'amortissement $c_c$ | $7 337 N.s/m$ |
+| Vitesse initiale $v_0$ | $3,05 m/s$ |
+| Raideur $k_c$ | $30 000 ; 46 680 ; 60 000 N/m$ |
+| Durée de simulation | $2 s$ |
+
+### 12.3. Résultats
+
+Les résultats obtenus sont présentés dans le tableau suivant.
+
+| $k_c (N/m)$ | Compression maximale $(mm)$ | Force maximale $(kN)$ | Accélération maximale $(m/s²)$ | Temps de compression maximale $(s)$ |
+|---:|---:|---:|---:|---:|
+| 30 000 | 354,392 | 22,359 | 17,574 | 0,3115 |
+| 46 680 | 292,619 | 22,475 | 17,716 | 0,2245 |
+| 60 000 | 263,643 | 23,409 | 18,860 | 0,1915 |
+
+Aucun événement de décollage n'a été détecté pendant les simulations.
+
+### 12.4. Analyse des résultats
+
+L'augmentation de la raideur entraîne une diminution de la compression maximale. Lorsque $k_c$ passe de $30 000$ à $60 000 N/m$, la compression maximale diminue d'environ $25,6 %$.
+
+En revanche, la force de contact maximale augmente légèrement, passant de $22,359 kN$ à $23,409 kN$. L'accélération maximale absolue augmente également d'environ $7,3 %$.
+
+Le temps nécessaire pour atteindre la compression maximale diminue de $0,3115 s$ à $0,1915 s$.
+
+Ces résultats montrent qu'un ressort plus rigide limite la déformation du train d'atterrissage, mais entraîne une augmentation des efforts transmis et des accélérations.
+
+Il existe donc un compromis entre la limitation de la compression et la réduction des charges dynamiques transmises à la structure.
+
+### 12.5. Fichiers générés
+
+Les résultats de cette étude sont enregistrés dans le dossier `results/influence_raideur/` :
+
+- `resultats_influence_raideur.csv`
+- `influence_raideur_compression.png`
+- `influence_raideur_force.png`
+- `influence_raideur_acceleration.png`
+
+
+
+## 13. Étude de l'influence de l'amortissement du système
+
+### 13.1. Objectif
+
+Cette étude vise à analyser l'influence du coefficient d'amortissement $c_c$ sur le comportement dynamique du train d'atterrissage pendant l'impact.
+
+L'amortisseur permet de dissiper une partie de l'énergie mécanique du système. Son coefficient influence donc la compression, les forces de contact et les accélérations pendant l'atterrissage.
+
+### 13.2. Paramètres de simulation
+
+Le coefficient d'amortissement est modifié tandis que les autres paramètres sont maintenus constants.
+
+| Paramètre | Valeur |
+|---|---:|
+| Masse équivalente $m$ | $816,5 kg$ |
+| Raideur $k_c$ | $46 680 N/m$ |
+| Vitesse initiale $v_0$ | $3,05 m/s$ |
+| Coefficient d'amortissement $c_c$ | $4 000 ; 7 337 ; 10 000 N.s/m$ |
+| Durée de simulation | $2 s$ |
+
+### 13.3. Résultats
+
+Les résultats obtenus sont présentés dans le tableau suivant.
+
+| $c_c (N·s/m)$ | Compression maximale $(mm)$ | Force maximale $(kN)$ | Accélération maximale $(m/s²)$ | Temps de compression maximale $(s)$ |
+|---:|---:|---:|---:|---:|
+| 4 000 | 387,683 | 20,654 | 15,486 | 0,2345 |
+| 7 337 | 292,619 | 22,475 | 17,716 | 0,2245 |
+| 10 000 | 243,650 | 30,434 | 27,463 | 0,2235 |
+
+Aucun événement de décollage n'a été détecté pendant les simulations.
+
+### 13.4. Analyse des résultats
+
+L'augmentation du coefficient d'amortissement entraîne une diminution de la compression maximale. Lorsque $c_c$ passe de $4 000$ à $10 000 N.s/m$, la compression maximale diminue d'environ $37,2 %$.
+
+Cependant, la force de contact maximale augmente de $20,654 kN$ à $30,434 kN$, soit une augmentation d'environ $47,4 %$.
+
+L'accélération maximale absolue augmente également de $15,486 m/s²$ à $27,463 m/s²$, soit une augmentation d'environ $77,3 %$.
+
+Le temps nécessaire pour atteindre la compression maximale varie relativement peu entre les trois simulations.
+
+Ces résultats montrent qu'un amortissement plus important permet de limiter la compression du système grâce à une dissipation plus importante de l'énergie mécanique. Toutefois, un coefficient d'amortissement trop élevé peut entraîner une augmentation importante des forces transmises et des accélérations.
+
+Le choix du coefficient d'amortissement doit donc prendre en compte à la fois la limitation de la compression et le confort dynamique de la structure.
+
+### 13.5. Fichiers générés
+
+Les résultats de cette étude sont enregistrés dans le dossier `results/influence_amortissement/` :
+
+- `resultats_influence_amortissement.csv`
+- `influence_amortissement_compression.png`
+- `influence_amortissement_force.png`
+- `influence_amortissement_acceleration.png`
+
+
+
+## 14. Référence bibliographique
 
 Kang, B.-H., Jo, B.-H., Kim, B.-G., Hwang, J.-H. et Choi, S.-B. (2023). Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. Actuators, 12(7), 287.
 
