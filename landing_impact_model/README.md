@@ -215,9 +215,9 @@ La vitesse initiale est le seul paramètre modifié. Les autres paramètres du m
 
 Les valeurs étudiées sont :
 
-$
+$$
 v_0 \in \left\{2{,}0;\ 2{,}5;\ 3{,}05;\ 3{,}5;\ 4{,}0\right\} \mathrm{m/s}
-$
+$$
 
 La valeur de référence est $v_0 = 3{,}05\ \mathrm{m/s}$.
 
