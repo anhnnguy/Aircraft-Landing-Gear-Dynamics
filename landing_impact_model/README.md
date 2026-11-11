@@ -102,24 +102,30 @@ Landing_Impact_Model/
 ├── etude_influence_vitesse.py
 ├── etude_influence_raideur.py
 ├── etude_influence_amortissement.py
+├── etude_influence_masse.py
 ├── landing_impact.py
 ├── README.md
 └── results/
     ├── influence_vitesse/
+        ├── influence_masse_acceleration.png
+        ├── influence_masse_compression.png
+        ├── influence_masse_force.png
+        ├── resultats_influence_masse.csv
+    ├── influence_vitesse/
         ├── influence_vitesse_acceleration.png
         ├── influence_vitesse_compression.png
         ├── influence_vitesse_force.png
-        ├── resultats_influence_vitesse.cvs
+        ├── resultats_influence_vitesse.csv
     ├── influence_raideur/
         ├── influence_raideur_compression.png
         ├── influence_raideur_force.png
         ├── influence_raideur_acceleration.png
-        ├── resultats_influence_raideur.cvs
+        ├── resultats_influence_raideur.csv
     ├── influence_amortissement/
         ├── influence_amortissement_compression.png
         ├── influence_amortissement_force.png
         ├── influence_amortissement_acceleration.png
-        ├── resultats_influence_amortissement.cvs
+        ├── resultats_influence_amortissement.csv
     ├── landing_impact_deplacement.png
     ├── landing_impact_vitesse.png
     ├── landing_impact_acceleration.png
@@ -373,9 +379,110 @@ Les résultats de cette étude sont enregistrés dans le dossier `results/influe
 - `influence_amortissement_acceleration.png`
 
 
+## 14. Étude de l'influence de la masse équivalente
 
-## 14. Référence bibliographique
+### 14.1. Objectif
 
-Kang, B.-H., Jo, B.-H., Kim, B.-G., Hwang, J.-H. et Choi, S.-B. (2023). Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. Actuators, 12(7), 287.
+Cette étude vise à analyser l'influence de la masse équivalente $m$ sur le comportement dynamique du train d'atterrissage pendant l'impact.
 
-https://doi.org/10.3390/act12070287
+La masse représente l'inertie du système. Sa variation peut modifier la compression maximale, les forces de contact, les accélérations ainsi que les caractéristiques dynamiques du système.
+
+L'objectif est donc d'évaluer l'influence de ce paramètre sur la réponse du modèle à un degré de liberté.
+
+### 14.2. Paramètres de simulation
+
+La masse équivalente est modifiée tandis que les autres paramètres du modèle sont maintenus constants.
+
+La masse de référence est :
+
+$$
+m_{\mathrm{ref}}=\frac{1633}{2}=816,5\ \mathrm{kg}
+$$
+
+Les valeurs étudiées correspondent à $50 %$, $75 %$, $100 %$, $125 %$ et $150 %$ de cette masse de référence.
+
+| Paramètre | Valeur |
+| :--- | ---: |
+| Masse équivalente $m$ | 408,25 ; 612,375 ; 816,5 ; 1 020,625 ; 1 224,75 kg |
+| Raideur $k_c$ | 46 680 N/m |
+| Coefficient d'amortissement $c_c$ | $7 337 N.s/m$ |
+| Vitesse initiale $v_0$ | $3,05 m/s$ |
+| Durée de simulation | $2 s$ |
+
+La masse équivalente constitue le seul paramètre variable de cette étude.
+
+### 14.3. Résultats numériques
+
+Les résultats obtenus sont présentés dans le tableau suivant.
+
+| Masse $m (kg)$ | Compression maximale $(mm)$ | Force maximale $(kN)$ | Accélération maximale $(m/s²)$ | Temps de compression maximale $(s)$ |
+| ---: | ---: | ---: | ---: | ---: |
+| 408,25 | 150,123 | 22,284 | 44,774 | 0,1360 |
+| 612,375 | 221,638 | 22,351 | 26,689 | 0,1825 |
+| 816,5 | 292,619 | 22,475 | 17,716 | 0,2245 |
+| 1 020,625 | 363,408 | 24,056 | 13,759 | 0,2625 |
+| 1 224,75 | 434,178 | 26,493 | 11,822 | 0,2985 |
+
+Les paramètres dynamiques théoriques sont également calculés :
+
+| Masse $m (kg)$ | Pulsation propre $\omega_n (rad/s)$ | Taux d'amortissement $\zeta$ |
+| ---: | ---: | ---: |
+| 408,25 | 10,6931 | 0,8403 |
+| 612,375 | 8,7309 | 0,6861 |
+| 816,5 | 7,5611 | 0,5942 |
+| 1 020,625 | 6,7629 | 0,5315 |
+| 1 224,75 | 6,1736 | 0,4852 |
+
+Aucun événement de décollage n'a été détecté pendant les simulations pour les cinq masses étudiées.
+
+### 14.4. Analyse des résultats
+
+Les résultats montrent que l'augmentation de la masse équivalente entraîne une augmentation significative de la compression maximale du système.
+
+Lorsque la masse passe de 408,25 kg à 1 224,75 kg, la compression maximale augmente de 150,123 mm à 434,178 mm, soit une augmentation d'environ 189,2 %.
+
+La force de contact maximale augmente également, passant de 22,284 kN à 26,493 kN, soit une augmentation d'environ 18,9 %. Cette évolution est notamment liée à l'augmentation de la déformation du ressort, qui entraîne une augmentation de la composante élastique de la force de contact.
+
+En revanche, l'accélération maximale absolue diminue lorsque la masse augmente. Elle passe de 44,774 m/s² à 11,822 m/s², soit une diminution d'environ 73,6 %.
+
+Ce comportement est cohérent avec l'équation dynamique du système :
+
+$$
+\ddot z=g-\frac{F_c}{m}
+$$
+
+Pour une force de contact donnée, une masse plus importante entraîne une accélération plus faible.
+
+Par ailleurs, la pulsation propre $\omega_n$ et le taux d'amortissement $\zeta$ diminuent avec l'augmentation de la masse. La pulsation propre passe de 10,6931 rad/s à 6,1736 rad/s, tandis que le taux d'amortissement diminue de 0,8403 à 0,4852.
+
+Le temps nécessaire pour atteindre la compression maximale augmente également, passant de 0,1360 s à 0,2985 s.
+
+Ces résultats montrent que l'augmentation de la masse équivalente entraîne une compression plus importante et une réponse dynamique plus lente, tout en réduisant l'accélération maximale absolue.
+
+### 14.5. Graphiques et données
+
+Les graphiques et les résultats numériques de cette étude sont enregistrés dans le dossier `results/influence_masse/` :
+
+- `influence_masse_compression.png` : influence de la masse sur la compression maximale ;
+- `influence_masse_force.png` : influence de la masse sur la force de contact maximale ;
+- `influence_masse_acceleration.png` : influence de la masse sur l'accélération maximale ;
+- `resultats_influence_masse.csv` : tableau des résultats numériques.
+
+Le programme utilisé est `influence_masse.py`.
+
+### 14.6. Conclusion
+
+L'étude paramétrique met en évidence l'influence importante de la masse équivalente sur le comportement dynamique du train d'atterrissage.
+
+Une augmentation de la masse entraîne une augmentation de la compression maximale et de la force de contact maximale, tandis que l'accélération maximale absolue diminue.
+
+Cette étude montre donc que la masse équivalente constitue un paramètre essentiel dans l'analyse de l'impact à l'atterrissage.
+
+Les résultats restent toutefois limités aux hypothèses du modèle simplifié et aux valeurs de masse étudiées.
+
+
+## 15. Référence bibliographique
+
+Kang, B.-H., Jo, B.-H., Kim, B.-G., Hwang, J.-H. et Choi, S.-B. (2023). Linear and Nonlinear Models for Drop Simulation of an Aircraft Landing Gear System with MR Dampers. *Actuators*, 12(7), 287.
+
+[https://doi.org/10.3390/act12070287](https://doi.org/10.3390/act12070287)
